@@ -1,2 +1,7 @@
 Dockerfile
 .env
+configs/
+historical_data/
+pb6/
+pb7/
+pbgui/

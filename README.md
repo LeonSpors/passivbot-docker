@@ -20,7 +20,8 @@ This Docker image provides a streamlined environment for running the Passivbot t
    ```bash
     MOUNT_DIR=D:\pb_userdata
    ```
-<br/>
+   
+   <br>
 
 2. **Create Folder Structure for Persistent Storage**
 
@@ -45,54 +46,28 @@ This Docker image provides a streamlined environment for running the Passivbot t
     └── pbgui
    ```
 
-   To accelerate this process, you can use the following scripts:
+    To accelerate this process, you can use the pre-built script available in the tools directory. This will create the necessary folder structure automatically.
 
-   ### Windows
+    ### Windows
 
-    Create a batch script create_folders.bat with the following content:
+    Simply run the setup.bat file located in the tools folder:
 
-   ```bash
-    @echo off
-    mkdir pb_userdata\configs
-    mkdir pb_userdata\historical_data
-    mkdir pb_userdata\pb6\backtests
-    mkdir pb_userdata\pb6\caches
-    mkdir pb_userdata\pb6\configs
-    mkdir pb_userdata\pb6\optimize_results
-    mkdir pb_userdata\pb6\optimize_results_analysis
-    mkdir pb_userdata\pb7\backtests
-    mkdir pb_userdata\pb7\caches
-    mkdir pb_userdata\pb7\configs
-    mkdir pb_userdata\pb7\optimize_results
-    mkdir pb_userdata\pb7\optimize_results_analysis
-    mkdir pb_userdata\pbgui
-    echo Folder structure created successfully.
-   ```
-   ### Linux
+    ```bash
+    tools\setup.bat
+    ```
 
-   Create a shell script create_folders.sh with the following content:
-   ```bash
-    #!/bin/bash
+    ### Linux
 
-    mkdir -p pb_userdata/configs \
-            pb_userdata/historical_data \
-            pb_userdata/pb6/backtests \
-            pb_userdata/pb6/caches \
-            pb_userdata/pb6/configs \
-            pb_userdata/pb6/optimize_results \
-            pb_userdata/pb6/optimize_results_analysis \
-            pb_userdata/pb7/backtests \
-            pb_userdata/pb7/caches \
-            pb_userdata/pb7/configs \
-            pb_userdata/pb7/optimize_results \
-            pb_userdata/pb7/optimize_results_analysis \
-            pb_userdata/pbgui
+    For Linux, you’ll first need to grant execute permissions to the setup.sh script and then run it:
 
-    echo "Folder structure created successfully."
-   ```
-<br/>
+    ```bash
+    chmod +x ./tools/setup.sh
+    ./tools/setup.sh
+    ```
 
-3. **Run the docker-compose file**
+    <br>
+
+1. **Run the docker-compose file**
     ```bash
     docker compose up --build
     ```
