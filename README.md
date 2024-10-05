@@ -27,6 +27,8 @@ This Docker image provides a streamlined environment for running the Passivbot t
     ```bash
     git clone https://github.com/LeonSpors/passivbot-docker.git
     ```
+    
+    <br>
 
 2. **Configure .env file**
    
