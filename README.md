@@ -96,3 +96,41 @@ This Docker image provides a streamlined environment for running the Passivbot t
     ```bash
     docker compose up --build
     ```
+
+<br>
+
+### FAQ
+
+#### Can I use Rclone for RBRemote?
+Yes! To use the Rclone feature of PBShare, simply add your `rclone.conf` file to the `pb_userdata/configs` directory.
+
+<br>
+
+#### Where should I place my API keys?
+Add your `api-keys.json` file to the `pb_userdata/configs` folder to configure API access.
+
+<br>
+
+#### How to configure PBGUI?
+Add your `pbgui.ini` file to the `pb_userdata/configs` folder.
+
+<br>
+
+#### How do I change the PBGUI password?
+Change the password in the `secrets.toml` file.
+
+<br>
+
+#### Can I access optimization, backtesting, or configuration files?
+Absolutely. All optimization, backtesting, and config files are stored in the `pb_userdata` directory under the appropriate subfolders (e.g., `pb6`, `pb7`).
+
+<br>
+
+#### How can I get shell access to the system?
+You can access the system by attaching to the running Docker container. Use the following command:
+
+```bash
+docker exec -it <container_id> /bin/bash
+```
+
+
