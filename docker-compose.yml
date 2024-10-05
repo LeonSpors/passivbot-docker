@@ -17,18 +17,18 @@ services:
       - ${USERDATA}/configs/pbgui.ini:/app/pbgui/pbgui.ini  # Required for PBGUI configuration
       - ${USERDATA}/pbgui:/app/pbgui/data  # Required for PBGUI data storage
 
-      # Rclone (optional)
-      # - ${USERDATA}/configs/rclone.conf:/root/.config/rclone/rclone.conf # Uncomment to use Rclone for file transfers
+      # Rclone
+      # Optional volumes (comment if needed):
+      #- ${USERDATA}/configs/rclone.conf:/root/.config/rclone/rclone.conf # Uncomment to use Rclone for file transfers
 
       # Passivbot 6.X
       - ${USERDATA}/configs/api-keys.json:/app/pb6/api-keys.json  # Required for API keys configuration
-      # Optional volumes (uncomment if needed):
-      # - ${USERDATA}/historical_data:/app/pb6/historical_data  # Historical data storage for PB6
-      # - ${USERDATA}/pb6/configs/:/app/pb6/configs  # Configurations for PB6
-      # - ${USERDATA}/pb6/backtests:/app/pb6/backtests  # Backtest results storage for PB6
-      # - ${USERDATA}/pb6/caches:/app/pb6/caches  # Caches for PB6
-      # - ${USERDATA}/pb6/optimize_results:/app/pb6/optimize_results  # Optimization results for PB6
-      # - ${USERDATA}/pb6/optimize_results_analysis:/app/pb6/optimize_results_analysis  # Analysis of optimization results for PB6
+      - ${USERDATA}/historical_data:/app/pb6/historical_data  # Historical data storage for PB6
+      - ${USERDATA}/pb6/configs/:/app/pb6/configs  # Configurations for PB6
+      - ${USERDATA}/pb6/backtests:/app/pb6/backtests  # Backtest results storage for PB6
+      - ${USERDATA}/pb6/caches:/app/pb6/caches  # Caches for PB6
+      - ${USERDATA}/pb6/optimize_results:/app/pb6/optimize_results  # Optimization results for PB6
+      - ${USERDATA}/pb6/optimize_results_analysis:/app/pb6/optimize_results_analysis  # Analysis of optimization results for PB6
 
       # Passivbot 7.X
       - ${USERDATA}/configs/api-keys.json:/app/pb7/api-keys.json  # Required for API keys configuration
