@@ -1,5 +1,11 @@
 ## Dockerized Passivbot with pbgui
 
+[![Static Badge](https://img.shields.io/badge/docker-pull-blue)](https://hub.docker.com/r/halfbax/passivbot)
+![Static Badge](https://img.shields.io/badge/Compatible%20with-Passivbot%20v6-green)
+![Static Badge](https://img.shields.io/badge/Compatible%20with-Passivbot%20v7-green)
+
+
+
 This Docker image provides a streamlined environment for running the Passivbot trading bot along with its graphical user interface, pbgui. Based on the lightweight `python:3.10-slim-buster` image, it includes all the necessary dependencies and setups for a hassle-free deployment.
 
 ### Features
