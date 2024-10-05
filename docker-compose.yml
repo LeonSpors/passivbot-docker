@@ -1,0 +1,40 @@
+# Dockerized Passivbot with PBGUI
+# https://github.com/LeonSpors/passivbot-docker
+
+services:
+  passivbot:
+    image: halfbax/passivbot:latest
+    ports:
+      - "8501:8501"
+    environment:
+      - USERDATA=${USERDATA} # Environment variable for user data directory
+    volumes:
+      # Make sure to create a .env file in the same directory
+      # This file should define the USERDATA variable for volume mounting
+      
+      # PBGUI
+      - ${USERDATA}/configs/secrets.toml:/app/pbgui/.streamlit/secrets.toml # Required for PBGUI authentication
+      - ${USERDATA}/configs/pbgui.ini:/app/pbgui/pbgui.ini  # Required for PBGUI configuration
+      - ${USERDATA}/pbgui:/app/pbgui/data  # Required for PBGUI data storage
+
+      # Rclone (optional)
+      # - ${USERDATA}/configs/rclone.conf:/root/.config/rclone/rclone.conf # Uncomment to use Rclone for file transfers
+
+      # Passivbot 6.X
+      - ${USERDATA}/configs/api-keys.json:/app/pb6/api-keys.json  # Required for API keys configuration
+      # Optional volumes (uncomment if needed):
+      # - ${USERDATA}/historical_data:/app/pb6/historical_data  # Historical data storage for PB6
+      # - ${USERDATA}/pb6/configs/:/app/pb6/configs  # Configurations for PB6
+      # - ${USERDATA}/pb6/backtests:/app/pb6/backtests  # Backtest results storage for PB6
+      # - ${USERDATA}/pb6/caches:/app/pb6/caches  # Caches for PB6
+      # - ${USERDATA}/pb6/optimize_results:/app/pb6/optimize_results  # Optimization results for PB6
+      # - ${USERDATA}/pb6/optimize_results_analysis:/app/pb6/optimize_results_analysis  # Analysis of optimization results for PB6
+
+      # Passivbot 7.X
+      - ${USERDATA}/configs/api-keys.json:/app/pb7/api-keys.json  # Required for API keys configuration
+      - ${USERDATA}/historical_data:/app/pb7/historical_data  # Historical data storage for PB7
+      - ${USERDATA}/pb7/configs/:/app/pb7/configs  # Configurations for PB7
+      - ${USERDATA}/pb7/backtests:/app/pb7/backtests  # Backtest results storage for PB7
+      - ${USERDATA}/pb7/caches:/app/pb7/caches  # Caches for PB7
+      - ${USERDATA}/pb7/optimize_results:/app/pb7/optimize_results  # Optimization results for PB7
+      - ${USERDATA}/pb7/optimize_results_analysis:/app/pb7/optimize_results_analysis  # Analysis of optimization results for PB7
