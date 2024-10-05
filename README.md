@@ -20,20 +20,29 @@ This Docker image provides a streamlined environment for running the Passivbot t
 - **Default Command**: Runs the pbgui using Streamlit, ready for interaction on startup.
 
 ### Quick start
-1. **Configure .env file**
+1. **Clone the Repository**
    
+    First, clone this repository to your local machine using the following command:
 
-   ```bash
-    MOUNT_DIR=D:\pb_userdata
-   ```
+    ```bash
+    git clone https://github.com/LeonSpors/passivbot-docker.git
+    ```
+
+2. **Configure .env file**
    
-   <br>
+    Open the .env file and set the following variable:
 
-2. **Create Folder Structure for Persistent Storage**
+    ```bash
+    USERDATA=<location of the current folder>
+    ```
+
+    <br>
+
+3. **Run setup**
 
     Set up the following directory structure based on your docker-compose.yml file:
 
-   ```bash
+    ```bash
     pb_userdata
     ├── configs
     ├── historical_data
@@ -50,9 +59,7 @@ This Docker image provides a streamlined environment for running the Passivbot t
     │   ├── optimize_results
     │   └── optimize_results_analysis
     └── pbgui
-   ```
-
-    To accelerate this process, you can use the pre-built script available in the tools directory. This will create the necessary folder structure automatically.
+    ```
 
     ### Windows
 
@@ -68,12 +75,12 @@ This Docker image provides a streamlined environment for running the Passivbot t
 
     ```bash
     chmod +x ./tools/setup.sh
-    ./tools/setup.sh
+    ./setup.sh
     ```
 
     <br>
 
-1. **Run the docker-compose file**
+4. **Run the docker-compose file**
     ```bash
     docker compose up --build
     ```
@@ -81,6 +88,11 @@ This Docker image provides a streamlined environment for running the Passivbot t
 <br>
 
 ### FAQ
+
+#### What is the default password?
+The default password is `your-password`. You can change it in the file located at `pb_userdata/configs/secrets.toml`.
+
+<br>
 
 #### Can I use Rclone for RBRemote?
 Yes! To use the Rclone feature of PBShare, simply add your `rclone.conf` file to the `pb_userdata/configs` directory.
