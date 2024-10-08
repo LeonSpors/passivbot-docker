@@ -121,6 +121,15 @@ Absolutely. All optimization, backtesting, and config files are stored in the `p
 
 <br>
 
+#### How can I update PBGUI and Passivbot?
+To update the software, you need to rebuild the container. Simply run the following commands:
+```bash
+docker-compose down
+docker-compose up --build
+```
+
+<br>
+
 #### How can I get shell access to the system?
 You can access the system by attaching to the running Docker container. Use the following command:
 
