@@ -8,6 +8,7 @@ services:
       - "8501:8501"
     environment:
       - USERDATA=${USERDATA} # Environment variable for user data directory
+    restart: always
     volumes:
       # Make sure to create a .env file in the same directory
       # This file should define the USERDATA variable for volume mounting
@@ -19,7 +20,7 @@ services:
 
       # Rclone
       # Optional volumes (comment if needed):
-      #- ${USERDATA}/configs/rclone.conf:/root/.config/rclone/rclone.conf # Uncomment to use Rclone for file transfers
+      - ${USERDATA}/configs/rclone.conf:/root/.config/rclone/rclone.conf # Uncomment to use Rclone for file transfers
 
       # Passivbot 6.X
       - ${USERDATA}/configs/api-keys.json:/app/pb6/api-keys.json  # Required for API keys configuration
