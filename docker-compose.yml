@@ -3,7 +3,13 @@
 
 services:
   passivbot:
-    image: halfbax/passivbot:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PBG6_VERSION: v6.1.4b  # Set the version of PB6
+        PBG7_VERSION: master   # Set the version of PB7. Default is latest commit on main line
+        PBGUI_VERSION: main    # Set the version of PBGUI. Default is latest commit on main line
     ports:
       - "8501:8501"
     environment:
