@@ -1,5 +1,5 @@
 # Use your pre-built image
-FROM halfbax/passivbot:latest
+FROM halfbax/passivbot:1.1.0
 
 # Install necessary dependencies
 RUN apt-get update && apt-get install -y git && apt-get clean && \
