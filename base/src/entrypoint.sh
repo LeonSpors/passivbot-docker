@@ -12,26 +12,57 @@ PBGUI_VERSION=${PBGUI_VERSION:-main}    # Default version for PBGUI
 mkdir -p $CONTAINER_DATA
 
 # Change to the directory where the repositories will be cloned
-cd /app || exit
+cd /app || { echo "Failed to change directory to /app"; exit 1; }
 
-# Clone repositories if they don't exist
-if [ ! -d "pbgui" ]; then
-    git clone https://github.com/msei99/pbgui.git
-    echo "Cloned pbgui repository."
-    FORCE_INSTALL=true
-fi
 
-if [ ! -d "pb6" ]; then
-    git clone https://github.com/enarjord/passivbot.git pb6
-    echo "Cloned pb6 repository."
-    FORCE_INSTALL=true
-fi
+# Function to clone repository
+clone_repo() {
+    local dir_name=$1
+    local repo_url=$2
 
-if [ ! -d "pb7" ]; then
-    git clone https://github.com/enarjord/passivbot.git pb7
-    echo "Cloned pb7 repository."
+    # Check if the target directory contains a .git folder
+    if [ -d "$dir_name/.git" ]; then
+        return
+    fi
+
+    # Clone the repository into a temporary directory
+    local temp_clone=$(mktemp -d "/tmp/${dir_name}.XXXXXX")
+    echo "Cloning repository from $repo_url to temporary directory $temp_clone..."
+    git clone "$repo_url" "$temp_clone" || { echo "Failed to clone repository: $repo_url"; exit 1; }
+
+    # Create the target directory if it doesn't exist
+    mkdir -p "$dir_name"
+
+    # Move files from the temporary clone to the target directory without overwriting
+    echo "Moving new files from $temp_clone to $dir_name..."
+    for file in "$temp_clone/"* "$temp_clone"/.*; do
+        # Check if the file is not the current directory (.) or parent directory (..)
+        if [[ "$file" != "$temp_clone/." && "$file" != "$temp_clone/.." ]]; then
+            local base_file=$(basename "$file")
+            if [ ! -e "$dir_name/$base_file" ]; then
+                mv "$file" "$dir_name/" || { echo "Failed to move $file to $dir_name"; exit 1; }
+                echo "Moved $base_file to $dir_name."
+            else
+                echo "$base_file already exists in $dir_name. Skipping."
+            fi
+        fi
+    done
+
+
+    # Clean up the temporary clone
+    rm -rf "$temp_clone"
+    echo "Cleaned up temporary directory $temp_clone."
     FORCE_INSTALL=true
-fi
+}
+
+# Check and clone pbgui
+clone_repo "pbgui" "https://github.com/msei99/pbgui.git"
+
+# Check and clone pb6
+clone_repo "pb6" "https://github.com/enarjord/passivbot.git"
+
+# Check and clone pb7
+clone_repo "pb7" "https://github.com/enarjord/passivbot.git"
 
 # Function to install
 install() {
