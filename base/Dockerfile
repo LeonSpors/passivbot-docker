@@ -22,7 +22,7 @@ RUN chmod +x /entrypoint.sh
 
 # Define build arguments for Git branches
 ARG PB6_VERSION=v6.1.4b
-ARG PB7_VERSION=main
+ARG PB7_VERSION=master
 ARG PBGUI_VERSION=main
 
 # Set environment variables for the entrypoint script
