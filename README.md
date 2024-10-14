@@ -122,11 +122,24 @@ Absolutely. All optimization, backtesting, and config files are stored in the `p
 <br>
 
 #### How can I update PBGUI and Passivbot?
-To update the software, you need to rebuild the container. Simply run the following commands:
-```bash
-docker-compose down
-docker-compose up --build
-```
+To update the software, follow these steps based on your situation:
+
+- **Scenario A: Same Branch**  
+  If you're using the same Git branch and just need to restart the container, run:
+
+  ```bash
+  docker compose restart
+  ```
+
+  <br>
+
+- **Scenario A: Different Branch**  
+  If you want to switch to a different Git branch, first update the `docker-compose.yml` file to specify the desired branch. Then, restart the container:
+
+  ```bash
+  docker-compose down
+  docker-compose up --build
+  ```
 
 <br>
 
