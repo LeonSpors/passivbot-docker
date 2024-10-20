@@ -7,8 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        PBG6_VERSION: v6.1.4b                                                         # Set the version of PB6
-        PBG7_VERSION: master                                                          # Set the version of PB7. Default is latest commit on main line
+        PB6_VERSION: v6.1.4b                                                         # Set the version of PB6
+        PB7_VERSION: master                                                          # Set the version of PB7. Default is latest commit on main line
         PBGUI_VERSION: main                                                           # Set the version of PBGUI. Default is latest commit on main line
     ports:
       - "8501:8501"
@@ -16,7 +16,7 @@ services:
       - USERDATA=${USERDATA}                                                          # Environment variable for user data directory
     restart: always
     volumes:
-        # Make sure to create a .env file in the same directory
+      # Make sure to create a .env file in the same directory
       # This file should define the USERDATA variable for volume mounting
       
       # PBGUI

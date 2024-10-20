@@ -5,8 +5,8 @@ set -e
 
 # Define variables
 CONTAINER_DATA=$HOME/.container
-PBG6_VERSION=${PBG6_VERSION:-v6.1.4b}   # Default version for PB6
-PBG7_VERSION=${PBG7_VERSION:-master}    # Default version for PB7
+PB6_VERSION=${PB6_VERSION:-v6.1.4b}   # Default version for PB6
+PB7_VERSION=master   # Default version for PB7
 PBGUI_VERSION=${PBGUI_VERSION:-main}    # Default version for PBGUI
 
 mkdir -p $CONTAINER_DATA
@@ -19,6 +19,9 @@ cd /app || { echo "Failed to change directory to /app"; exit 1; }
 clone_repo() {
     local dir_name=$1
     local repo_url=$2
+    local branch=$3 
+
+    echo "Branch: $branch"
 
     # Check if the target directory contains a .git folder
     if [ -d "$dir_name/.git" ]; then
@@ -28,7 +31,7 @@ clone_repo() {
     # Clone the repository into a temporary directory
     local temp_clone=$(mktemp -d "/tmp/${dir_name}.XXXXXX")
     echo "Cloning repository from $repo_url to temporary directory $temp_clone..."
-    git clone "$repo_url" "$temp_clone" || { echo "Failed to clone repository: $repo_url"; exit 1; }
+    git clone -b "$branch" "$repo_url" "$temp_clone" || { echo "Failed to clone repository: $repo_url"; exit 1; }
 
     # Create the target directory if it doesn't exist
     mkdir -p "$dir_name"
@@ -55,21 +58,15 @@ clone_repo() {
     FORCE_INSTALL=true
 }
 
-# Check and clone pbgui
-clone_repo "pbgui" "https://github.com/msei99/pbgui.git"
-
-# Check and clone pb6
-clone_repo "pb6" "https://github.com/enarjord/passivbot.git"
-
-# Check and clone pb7
-clone_repo "pb7" "https://github.com/enarjord/passivbot.git"
-
 # Function to install
-install() {
+install () {
     local app_dir=$1
     local venv_dir=$2
     local requirements_file="$app_dir/requirements.txt"
     local commit_file="$CONTAINER_DATA/$(basename "$app_dir")_installed_commit.txt"
+
+    echo "App dir: $app_dir"
+    echo "Venv dir: $venv_dir"
 
     # Change to the application directory
     cd "$app_dir" || exit
@@ -115,6 +112,9 @@ install() {
             return
         # If there are changes that can be fetched, enable FORCE_INSTALL
         elif [ "$local_commit" != "$remote_commit" ]; then
+            echo "Fetching latest commit..."
+            git pull -q
+
             echo "Changes detected in $app_dir. Setting FORCE_INSTALL to true..."
             FORCE_INSTALL=true
         fi
@@ -146,19 +146,10 @@ install() {
     cd - || exit
 }
 
-
-# Checkout specific versions
-cd pb6
-git checkout "$PBG6_VERSION" -q || { echo "Failed to checkout $PBG6_VERSION in pb6"; exit 1; }
-cd ..
-
-cd pb7
-git checkout "$PBG7_VERSION" -q || { echo "Failed to checkout $PBG7_VERSION in pb7"; exit 1; }
-cd ..
-
-cd pbgui
-git checkout "$PBGUI_VERSION" -q || { echo "Failed to checkout $PBGUI_VERSION in pbgui"; exit 1; }
-cd ..
+# Clone repositories
+clone_repo "pb6" "https://github.com/enarjord/passivbot.git" "$PB6_VERSION"
+clone_repo "pb7" "https://github.com/enarjord/passivbot.git" "$PB7_VERSION"
+clone_repo "pbgui" "https://github.com/msei99/pbgui.git" "$PBGUI_VERSION"
 
 # Install dependencies for each app
 install "/app/pb6" "/venv_pb6"
